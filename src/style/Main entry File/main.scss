@@ -1,0 +1,12 @@
+@import "base/variables";
+@import "base/reset";
+@import "base/mixins";
+
+@import "layout/header";
+@import "layout/cart";
+
+@import "components/buttons";
+@import "components/product-card";
+@import "components/categories";
+
+@import "pages/home";

@@ -1,0 +1,58 @@
+.cart {
+    background-color: $secondary-color;
+    border-left: 1px solid #ccc;
+    padding: $spacing-unit * 2;
+    box-shadow: $card-shadow;
+  
+    .cart-title {
+      font-size: 1.25rem;
+      font-weight: bold;
+      margin-bottom: $spacing-unit;
+    }
+  
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: $spacing-unit;
+      border-bottom: 1px solid #eee;
+  
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+  
+      .item-details {
+        flex: 1;
+        margin-left: $spacing-unit;
+      }
+  
+      .price {
+        font-weight: bold;
+      }
+    }
+  
+    .total {
+      margin-top: $spacing-unit * 2;
+      font-size: 1.25rem;
+      text-align: right;
+    }
+  
+    .pay-button {
+      @include flex-center;
+      width: 100%;
+      padding: $spacing-unit * 2;
+      background-color: $primary-color;
+      color: $secondary-color;
+      font-size: 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+  

@@ -1,0 +1,37 @@
+.home {
+    .categories {
+      display: flex;
+      justify-content: space-around;
+      margin: $spacing-unit * 2 0;
+  
+      .category {
+        @include flex-center;
+        flex-direction: column;
+        padding: $spacing-unit;
+        text-align: center;
+        color: $primary-color;
+  
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          margin-bottom: $spacing-unit / 2;
+        }
+  
+        &:hover {
+          color: darken($primary-color, 10%);
+        }
+      }
+    }
+  
+    .featured {
+      margin-top: $spacing-unit * 4;
+  
+      .product-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: $spacing-unit * 2;
+      }
+    }
+  }
+  

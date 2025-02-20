@@ -1,0 +1,40 @@
+.product-card {
+    background-color: $secondary-color;
+    border-radius: 8px;
+    box-shadow: $card-shadow;
+    padding: $spacing-unit * 2;
+    text-align: center;
+  
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin-bottom: $spacing-unit;
+    }
+  
+    .product-name {
+      font-weight: bold;
+      margin-bottom: $spacing-unit / 2;
+    }
+  
+    .price {
+      color: $accent-color;
+      font-weight: bold;
+    }
+  
+    .add-to-cart {
+      @include flex-center;
+      margin-top: $spacing-unit;
+      padding: $spacing-unit;
+      background-color: $primary-color;
+      color: $secondary-color;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+  
+      &:hover {
+        background-color: darken($primary-color, 10%);
+      }
+    }
+  }
+  

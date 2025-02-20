@@ -1,0 +1,35 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: $spacing-unit * 2;
+    background-color: $primary-color;
+    color: $secondary-color;
+  
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+  
+    .search-bar {
+      flex: 1;
+      margin: 0 $spacing-unit * 2;
+      input {
+        width: 100%;
+        padding: $spacing-unit;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+      }
+    }
+  
+    .icons {
+      display: flex;
+      gap: $spacing-unit * 2;
+  
+      .icon {
+        font-size: 1.5rem;
+        color: $secondary-color;
+      }
+    }
+  }
+  

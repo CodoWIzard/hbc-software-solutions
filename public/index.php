@@ -1,23 +1,3 @@
-<?php
-// Include database configuration and routing
-require './config/database.php';
-header("Access-Control-Allow-Origin: *");
-header("Content-Type: application/json");
-
-$uri = explode('/', trim($_SERVER['REQUEST_URI'], '/'));
-
-if ($uri[0] === 'products') {
-    require './src/routes/products.php';
-} elseif ($uri[0] === 'orders') {
-    require './src/routes/orders.php';
-} else {
-    http_response_code(404);
-    echo json_encode(["message" => "Route not found"]);
-    exit; // Stop further execution if route is not found
-}
-?>
-
-<?php include 'header.php'; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -78,7 +58,7 @@ if ($uri[0] === 'products') {
                     <div class="flex items-center space-x-1">
                         <span class="text-2xl font-bold text-green-500">16</span>
                         <span>Category</span>
-                    </div>
+                   </div>
                 </div>
             </div>
         </div>
@@ -262,5 +242,3 @@ if ($uri[0] === 'products') {
     </script>
 </body>
 </html>
-
-<?php include 'footer.php'; ?>

@@ -1,39 +1,62 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_FILES["image"])) {
-    // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "hbc_software";
+//require './src/config/database.php'; // Database connection file
 
-    try {
-        $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+class Database {
+    private $host = "localhost";
+    private $db_name = "hbc_software";
+    private $username = "root";
+    private $password = "";
+    public $conn;
 
-        // File properties
-        $image = $_FILES["image"];
-        $filename = basename($image["name"]);
-        $targetDir = "\hbc-software-solutions\src\assets\images";  // Folder where images will be stored
-        $targetFile = $targetDir . $filename;
-        $description = $_POST["description"];
-
-        // Move uploaded file to server directory
-        if (move_uploaded_file($image["tmp_name"], $targetFile)) {
-            // Save filename and description in the database
-            $stmt = $conn->prepare("INSERT INTO images (filename, description) VALUES (:filename, :description)");
-            $stmt->bindParam(":filename", $filename);
-            $stmt->bindParam(":description", $description);
-            $stmt->execute();
-
-            echo "Image uploaded successfully.";
-        } else {
-            echo "Error uploading file.";
+    public function getConnection() {
+        $this->conn = null;
+        try {
+            $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db_name, $this->username, $this->password);
+            $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $exception) {
+            echo "Connection error: " . $exception->getMessage();
         }
-    } catch (PDOException $e) {
-        echo "Database error: " . $e->getMessage();
+        return $this->conn;
     }
+}
 
-    // Close connection
-    $conn = null;
+if (isset($_POST['submit'])) {
+    $targetDir = "uploads/"; // Folder to store images
+    $fileName = basename($_FILES["image"]["name"]);
+    $targetFilePath = $targetDir . $fileName;
+    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+
+    echo "Received file: " . $fileName . "<br>";
+
+    // Allow only certain file types
+    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    if (in_array(strtolower($fileType), $allowedTypes)) {
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+            echo "File moved successfully to: " . $targetFilePath . "<br>";
+
+            // Store the file path in the database
+            try {
+                $pdo = new PDO("mysql:host=localhost;dbname=your_database", "your_username", "your_password");
+                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+                $stmt = $pdo->prepare("INSERT INTO images (image_path) VALUES (:image_path)");
+                $stmt->bindParam(":image_path", $targetFilePath);
+
+                if ($stmt->execute()) {
+                    echo "Image path stored in database successfully!";
+                } else {
+                    echo "Failed to insert into database.";
+                }
+            } catch (PDOException $e) {
+                echo "Database error: " . $e->getMessage();
+            }
+        } else {
+            echo "Error moving uploaded file.";
+        }
+    } else {
+        echo "Invalid file format.";
+    }
+} else {
+    echo "No file received.";
 }
 ?>

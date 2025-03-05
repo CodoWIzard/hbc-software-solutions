@@ -20,42 +20,36 @@ class Database {
     }
 }
 
-if (isset($_POST['submit'])) {
-    $targetDir = "uploads/"; // stoage
-    $fileName = basename($_FILES["image"]["name"]);
-    $targetFilePath = $targetDir . $fileName;
-    $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
+$uploadDir = __DIR__ . "/../images/"; // Ensure it points to your actual "images" directory
+$targetFilePath = $uploadDir . basename($_FILES["image"]["name"]);
 
-    echo "Received file: " . $fileName . "<br>";
+if (!is_dir($uploadDir)) {
+    mkdir($uploadDir, 0777, true); // Create the directory if it doesn't exist
+}
 
-    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
-    if (in_array(strtolower($fileType), $allowedTypes)) {
-        if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
-            echo "File moved successfully to: " . $targetFilePath . "<br>";
+if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
+    echo "File moved successfully to: " . $targetFilePath . "<br>";
 
-            // Store the file path
-            try {
-                $pdo = new PDO("mysql:host=localhost;dbname=your_database", "your_username", "your_password");
-                $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Store the relative path instead of absolute
+    $relativeFilePath = "images/" . basename($_FILES["image"]["name"]);
 
-                $stmt = $pdo->prepare("INSERT INTO images (image_path) VALUES (:image_path)");
-                $stmt->bindParam(":image_path", $targetFilePath);
+    try {
+        $pdo = new PDO("mysql:host=localhost;dbname=hbc_software", "root", "");
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-                if ($stmt->execute()) {
-                    echo "Image path stored in database successfully!";
-                } else {
-                    echo "Failed to insert into database.";
-                }
-            } catch (PDOException $e) {
-                echo "Database error: " . $e->getMessage();
-            }
+        $stmt = $pdo->prepare("INSERT INTO images (image_path) VALUES (:image_path)");
+        $stmt->bindParam(":image_path", $relativeFilePath);
+
+        if ($stmt->execute()) {
+            echo "Image path stored in database successfully!";
         } else {
-            echo "Error moving uploaded file.";
+            echo "Failed to insert into database.";
         }
-    } else {
-        echo "Invalid file format.";
+    } catch (PDOException $e) {
+        echo "Database error: " . $e->getMessage();
     }
 } else {
-    echo "No file received.";
+    echo "Error moving uploaded file.";
 }
+
 ?>

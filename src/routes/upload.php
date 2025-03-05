@@ -1,5 +1,5 @@
 <?php
-//require './src/config/database.php'; // Database connection file
+//require './src/config/database.php';
 
 class Database {
     private $host = "localhost";
@@ -21,20 +21,19 @@ class Database {
 }
 
 if (isset($_POST['submit'])) {
-    $targetDir = "uploads/"; // Folder to store images
+    $targetDir = "uploads/"; // stoage
     $fileName = basename($_FILES["image"]["name"]);
     $targetFilePath = $targetDir . $fileName;
     $fileType = pathinfo($targetFilePath, PATHINFO_EXTENSION);
 
     echo "Received file: " . $fileName . "<br>";
 
-    // Allow only certain file types
     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
     if (in_array(strtolower($fileType), $allowedTypes)) {
         if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
             echo "File moved successfully to: " . $targetFilePath . "<br>";
 
-            // Store the file path in the database
+            // Store the file path
             try {
                 $pdo = new PDO("mysql:host=localhost;dbname=your_database", "your_username", "your_password");
                 $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

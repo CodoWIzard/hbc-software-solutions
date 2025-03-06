@@ -20,18 +20,21 @@ class Database {
     }
 }
 
-$uploadDir = __DIR__ . "/../images/"; // Ensure it points to your actual "images" directory
-$targetFilePath = $uploadDir . basename($_FILES["image"]["name"]);
+$uploadDir = realpath(__DIR__ . "/../assets/images/") . "/"; // Adjusted to point to your actual images folder
+$fileName = basename($_FILES["image"]["name"]);
+$targetFilePath = $uploadDir . $fileName;
 
+// Ensure directory exists
 if (!is_dir($uploadDir)) {
-    mkdir($uploadDir, 0777, true); // Create the directory if it doesn't exist
+    mkdir($uploadDir, 0777, true);
 }
 
+// Move the uploaded file
 if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
     echo "File moved successfully to: " . $targetFilePath . "<br>";
 
-    // Store the relative path instead of absolute
-    $relativeFilePath = "images/" . basename($_FILES["image"]["name"]);
+    // ✅ Store only the relative path
+    $relativeFilePath = "assets/images/" . $fileName;
 
     try {
         $pdo = new PDO("mysql:host=localhost;dbname=hbc_software", "root", "");

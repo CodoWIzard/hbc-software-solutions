@@ -1,15 +1,8 @@
 <?php
 session_start();
 
-// Get the JSON data from the request
-$data = isset($_POST['cart']) ? json_decode($_POST['cart'], true) : [];
-
-// Store the cart in the session
-if (!empty($data)) {
-    $_SESSION['cart'] = $data;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $cart = json_decode(file_get_contents('php://input'), true);
+    $_SESSION['cart'] = $cart;
 }
-
-// Redirect back to the order page
-header('Location: order.php');
-exit();
 ?>

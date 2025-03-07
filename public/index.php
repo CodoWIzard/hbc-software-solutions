@@ -2,6 +2,14 @@
 include "productsarray.php";
 ?>
 
+<?php
+session_start();
+
+// Initialize cart session
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,6 +45,10 @@ include "productsarray.php";
             width: 200px; 
             height: 300px; 
         }
+        /* Popup styles */
+        #popup {
+            transition: all 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -45,7 +57,7 @@ include "productsarray.php";
         <div class="relative mb-4">
             <img alt="Banner image of fresh and healthy food" class="w-full h-48 object-cover rounded-t-lg" height="300" src="https://storage.googleapis.com/a1aa/image/hrTveBswqhZCzdlmGeZ18S1oxQGH0XKhJ7ApP2d-FE4.jpg" width="1200"/>
             <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white rounded-t-lg">
-                <h1 class="text-4xl font -bold">Happy Herbivore</h1>
+                <h1 class="text-4xl font-bold">Happy Herbivore</h1>
                 <p class="text-lg">Fresh & Healthy Food</p>
                 <div class="flex space-x-4 mt-2">
                     <div class="flex items-center space-x-1">
@@ -53,7 +65,7 @@ include "productsarray.php";
                         <span>Total Items</span>
                     </div>
                     <div class="flex items-center space-x-1">
-                        <span class="text-2xl font-bold text-green-500">5</span>
+                        <span class="text-2xl font-bold text-green-500">6</span>
                         <span>Category</span>
                     </div>
                 </div>
@@ -127,9 +139,9 @@ include "productsarray.php";
 
     <!-- Popup Modal -->
     <div id="popup" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
-        <div class="bg-white rounded-lg p-4 w-11/12 max-w-md">
+        <div class="bg-white rounded-lg p-4 w-11/12 max-w-lg">
             <h2 id="popup-title" class="text-xl font-bold mb-2"></h2>
-            <img id="popup-image" class="w-full h-32 object-cover rounded-lg mb-2" />
+            <img id="popup-image" class="w-full h-64 object-cover rounded-lg mb-2" />
             <p id="popup-description" class="mb-4"></p>
             <div class="flex justify-between">
                 <button onclick="closePopup()" class="mt-4 bg-red-500 text-white rounded-full px-4 py-2">Close</button>
@@ -200,7 +212,7 @@ include "productsarray.php";
                     <div class="flex-1">
                         <span>${item.name}</span>
                         <div class="flex items-center">
-                            <button class="gradient-red text -white rounded-full p-1" onclick="changeQuantity('${item.name}', -1)">-</button>
+                            <button class="gradient-red text-white rounded-full p-1" onclick="changeQuantity('${item.name}', -1)">-</button>
                             <span class="mx-2">${item.quantity}</span>
                             <button class="gradient-green text-white rounded-full p-1" onclick="changeQuantity('${item.name}', 1)">+</button>
                         </div>
@@ -228,6 +240,25 @@ include "productsarray.php";
             localStorage.setItem('cart', JSON.stringify(cart));
             window.location.href = 'order.php'; // Redirect to order.php
         }
+
+        function addToCart(name, price, image) {
+    const existingItem = cart.find(item => item.name === name);
+    if (existingItem) {
+        existingItem.quantity++;
+    } else {
+        cart.push({ name, price, quantity: 1, image });
+    }
+    updateCart();
+
+    // Store cart in session
+    fetch('update_cart.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(cart)
+    });
+}
     </script>
 </body>
 </html>

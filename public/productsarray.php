@@ -98,11 +98,11 @@ $products = [
         'category' => 'snacks'
     ],
     [
-        'name' => 'Hummus and Veggies',
+        'name' => 'Zucchini Fries',
         'price' => 3.00,
-        'calories' => '250 kcal',
-        'description' => 'Creamy hummus served with a variety of fresh vegetables for dipping.',
-        'image_url' => 'assets/images/roasted-pepper-hummus-square-2.jpg',
+        'calories' => '180 kcal',
+        'description' => 'Baked zucchini sticks coated in a light breadcrumb crust.',
+        'image_url' => 'assets/images/Zucchini-Fries.jpg',
         'category' => 'snacks'
     ],
     [
@@ -162,27 +162,11 @@ $products = [
         'category' => 'dips'
     ],
     [
-        'name' => 'Fruit Smoothie',
-        'price' => 4.50,
-        'calories' => '250 kcal',
-        'description' => 'A refreshing blend of seasonal fruits and yogurt.',
-        'image_url' => 'assets/images/fruit-smoothie.jpg',
-        'category' => 'drinks'
-    ],
-    [
-        'name' => 'Green Detox Juice',
-        'price' => 5.00,
-        'calories' => '150 kcal',
-        'description' => 'A revitalizing juice made with kale, cucumber, and green apple.',
-        'image_url' => 'assets/images/green-juice.jpg',
-        'category' => 'drinks'
-    ],
-    [
-        'name' => 'Herbal Iced Tea',
-        'price' => 2.50,
-        'calories' => '50 kcal',
-        'description' => 'Refreshing iced tea brewed with herbal ingredients.',
-        'image_url' => 'assets/images/herbal-tea.jpg',
+        'name' => 'Berry Blast Smoothie',
+        'price' => 3.80,
+        'calories' => '140 kcal',
+        'description' => 'A creamy blend of strawberries, blueberries, and raspberries with almond milk.',
+        'image_url' => 'assets/images/Berry-Blast-Smoothie.jpg',
         'category' => 'drinks'
     ],
     [
@@ -226,43 +210,29 @@ $products = [
         'category' => 'drinks',
     ],
     [
-        'name' => 'Berry Blast Smoothie', 
-        'price' => 4.00,
-        'calories' => '230 kcal',
-        'description' => 'A delicious blend of strawberries, blueberries, and yogurt.',
-        'image_url' => 'assets/images/berry-blast-smoothie.jpg',
+        'name' => 'Iced Matcha Latte', 
+        'price' => 3.00,
+        'calories' => '90 kcal',
+        'description' => 'Lightly sweetened matcha green tea with almond milk.',
+        'image_url' => 'assets/images/Ice_matcha.jpg',
         'category' => 'drinks'
     ],
     [
-        'name' => 'Coconut Water',
-        'price' => 2.50,
+        'name' => 'Fruit-Infused Water',
+        'price' => 1.50,
         'calories' => '60 kcal',
-        'description' => 'Refreshing coconut water packed with electrolytes.',
-        'image_url' => 'assets/images/coconut-water.jpg',
+        'description' => 'Freshly infused water with a choice of lemon-mint, strawberry-basil, or cucumber-lime.',
+        'image_url' => 'assets/images/Fruit-Infused.jpg',
         'category' => 'drinks'
     ],
     [
-        'name' => 'Mango Lassi',
-        'price' => 3.50,
-        'calories' => '180 kcal',
-        'description' => 'A traditional Indian yogurt drink blended with mango.',
-        'image_url' => 'assets/images/mango-lassi.jpg',
+        'name' => 'Citrus Cooler',
+        'price' => 3.00,
+        'calories' => '90 kcal',
+        'description' => 'A refreshing mix of orange juice, sparkling water, and a hint of lime.',
+        'image_url' => 'assets/images/Citrus-Cooler.jpg',
         'category' => 'drinks'
     ],
-    [
-        'name' => 'Peach Iced Tea',
-        'price' => 2.50,
-        'calories' => '70 kcal',
-        'description' => 'Iced tea infused with peach flavor.',
-        'image_url' => 'assets/images/peach-iced-tea.jpg',
-        'category' => 'drinks'
-    ],
-    [
-        'name' => 'Lemonade',
-        'price' => 2.00,
-        'calories' => '100 kcal',
-        'description' => 'Freshly squeezed lemonade with a hint of mint.',
-        'image_url' => 'assets/images/lemonade.jpg',
-        'category' => 'drinks'
-    ]
+
+
 ];

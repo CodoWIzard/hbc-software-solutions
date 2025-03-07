@@ -1,16 +1,21 @@
+<?php
+include "productsarray.php";
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Herbivore</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="icon" href="assets/images/heblogoicon.webp" type="image/png">
     <style>
         body {
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Lato', sans-serif;
+            background-color: white;
         }
         .gradient-green {
             background: linear-gradient(90deg, #38b2ac, #68d391);
@@ -18,226 +23,210 @@
         .gradient-red {
             background: linear-gradient(90deg, #f56565, #fc8181);
         }
+        .hidden {
+            display: none;
+        }
+        .category-button {
+            border-radius: 12px;
+            transition: box-shadow 0.3s;
+        }
+        .category-button:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        .item {
+            width: 200px; 
+            height: 300px; 
+        }
     </style>
 </head>
-<body class="bg-orange-50">
+<body>
     <div class="max-w-screen-xl mx-auto p-4">
-        <!-- Header -->
-        <div class="flex items-center justify-between mb-4">
-            <div class="flex items-center space-x-2">
-                <div class="relative w-full max-w-md">
-                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-white"></i>
-                    <input class="pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 bg-green-500 text-white placeholder-white w-full" placeholder="Search" type="text"/>
-                </div>
-                <div class="flex space-x-2">
-                    <div class="gradient-green p-2 rounded-full">
-                        <i class="fas fa-home text-white text-2xl"></i>
-                    </div>
-                    <div class="gradient-green p-2 rounded-full">
-                        <i class="fas fa-shopping-cart text-white text-2xl"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="relative">
-                <i class="fas fa-bell text-green-500 text-2xl"></i>
-                <span class="absolute top-0 right-0 inline-block w-2 h-2 bg-red-500 rounded-full"></span>
-            </div>
-        </div>
         <!-- Banner -->
         <div class="relative mb-4">
             <img alt="Banner image of fresh and healthy food" class="w-full h-48 object-cover rounded-t-lg" height="300" src="https://storage.googleapis.com/a1aa/image/hrTveBswqhZCzdlmGeZ18S1oxQGH0XKhJ7ApP2d-FE4.jpg" width="1200"/>
-            <div class="absolute inset-0 bg-black bg-opacity-50 flex justify-between items-center text-white rounded-t-lg px-4">
-                <div>
-                    <h1 class="text-5xl font-bold">Happy Herbivore</h1>
-                </div>
-                <div class="flex space-x-4">
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-white rounded-t-lg">
+                <h1 class="text-4xl font -bold">Happy Herbivore</h1>
+                <p class="text-lg">Fresh & Healthy Food</p>
+                <div class="flex space-x-4 mt-2">
                     <div class="flex items-center space-x-1">
-                        <span class="text-2xl font-bold text-green-500">45</span>
+                        <span class="text-2xl font-bold text-green-500" id="total-items"><?php echo count($products); ?></span>
                         <span>Total Items</span>
                     </div>
                     <div class="flex items-center space-x-1">
-                        <span class="text-2xl font-bold text-green-500">16</span>
+                        <span class="text-2xl font-bold text-green-500">5</span>
                         <span>Category</span>
-                   </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- Categories -->
-        <div class="grid grid-cols-3 sm:grid-cols-6 gap-4 mb-4">
-            <div class="flex flex-col items-center">
-                <img alt="Breakfast category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/QDRmb4ifadd8Y1-HiyXRzXMB0Rixm0ccO02vCb-9VKU.jpg" width="50"/>
-                <span>BF</span>
+        <div class="flex">
+            <!-- Categories -->
+            <div class="flex flex-col items-start mb-4 mr-4">
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('breakfast')">
+                    <img alt="Breakfast category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/QDRmb4ifadd8Y1-HiyXRzXMB0Rixm0ccO02vCb-9VKU.jpg" width="50"/>
+                    <span>BF</span>
+                </button>
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('lunch')">
+                    <img alt="Lunch category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/9QFI1yjZ6KzGArK9Wrzaa5bO3lcNJmp7bYSD70UyKzU.jpg" width="50"/>
+                    <span>Lunch</span>
+                </button>
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('sides')">
+                    <img alt="Sides category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/QxZBRZYollAvdY-KoxFPNFtkRXW7rOcbxAYgbak1toc.jpg" width="50"/>
+                    <span>Sides</span>
+                </button>
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('snacks')">
+                    <img alt="Snacks category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/xsXmzp8Rmx8mGJUfiZTcoPC1dHTW7ZScMRUVl-lpAuQ.jpg" width="50"/>
+                    <span>Snacks</span>
+                </button>
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('dips')">
+                    <img alt="Dips category" class="w-16 h-16 rounded-full" height="50" src="assets/images/8F1A9812-3-scaled.jpg" width="50"/>
+                    <span>Dips</span>
+                </button>
+                <button class="flex flex-col items-center mb-2 category-button" onclick="filterItems('drinks')">
+                    <img alt="Drinks category" class="w-16 h-16 rounded-full" height="50" src="assets/images/Smoothie-post.jpg" width="50"/>
+                    <span>Drinks</span>
+                </button>
             </div>
-            <div class="flex flex-col items-center">
-                <img alt="Lunch category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/9QFI1yjZ6KzGArK9Wrzaa5bO3lcNJmp7bYSD70UyKzU.jpg" width="50"/>
-                <span>Lunch</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <img alt="Dinner category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/Pf9n9SeTLRVjeObRAHlnGERFvra65v16uizOMeH_Pi4.jpg" width="50"/>
-                <span>Dinner</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <img alt="Sides category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/QxZBRZYollAvdY-KoxFPNFtkRXW7rOcbxAYgbak1toc.jpg" width="50"/>
-                <span>Sides</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <img alt="Drinks category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/mEKwTCtQvYMajQvWXmBKwQujTpANhwCScG0I1rBNcgk.jpg" width="50"/>
-                <span>Drinks</span>
-            </div>
-            <div class="flex flex-col items-center">
-                <img alt="Snacks category" class="w-16 h-16 rounded-full" height="50" src="https://storage.googleapis.com/a1aa/image/xsXmzp8Rmx8mGJUfiZTcoPC1dHTW7ZScMRUVl-lpAuQ.jpg" width="50"/>
-                <span>Snacks</span>
-            </div>
-        </div>
-        <!-- Featured Items -->
-        <h2 class="text-2xl font-bold mb-4">Featured</h2>
-        <div class="flex overflow-x-auto space-x-4">
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Berry Blast Smoothie" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/NiHx_vpCdvKeNlaMnKS87oqH5kdyYPDd_Ke1roqdwWw.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Berry Blast Smoothie</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.4</span>
-                    <span class="text-xl font-bold text-red-500">€4.50</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('berry-blast', 4.50, 'https://storage.googleapis.com/a1aa/image/NiHx_vpCdvKeNlaMnKS87oqH5kdyYPDd_Ke1roqdwWw.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Smoothie Bowl" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/VxzohXyYtv9pXIUBOnrwGfOekHQaXudz9UC8hKUpcs4.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Smoothie Bowl</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.8</span>
-                    <span class="text-xl font-bold text-red-500">€4.50</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('smoothie-bowl', 4.50, 'https://storage.googleapis.com/a1aa/image/VxzohXyYtv9pXIUBOnrwGfOekHQaXudz9UC8hKUpcs4.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Trail Mix Cup" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/9QFI1yjZ6KzGArK9Wrzaa5bO3lcNJmp7bYSD70UyKzU.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Trail Mix Cup</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.2</span>
-                    <span class="text-xl font-bold text-red-500">€4.50</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('trail-mix-cup', 4.50, 'https://storage.googleapis.com/a1aa/image/9QFI1yjZ6KzGArK9Wrzaa5bO3lcNJmp7bYSD70UyKzU.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Quinoa Salad" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/Pf9n9SeTLRVjeObRAHlnGERFvra65v16uizOMeH_Pi4.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Quinoa Salad</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.3</span>
-                    <span class="text-xl font-bold text-red-500">€4.50</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('quinoa-salad', 4.50, 'https://storage.googleapis.com/a1aa/image/Pf9n9SeTLRVjeObRAHlnGERFvra65v16uizOMeH_Pi4.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Green Smoothie" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/green-smoothie.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Green Smoothie</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.5</span>
-                    <span class="text-xl font-bold text-red-500">€5.00</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('green-smoothie', 5.00, 'https://storage.googleapis.com/a1aa/image/green-smoothie.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="bg-white p-4 rounded-lg shadow min-w-[200px]">
-                <img alt="Fruit Salad" class="w-full h-32 object-cover rounded-lg mb-2" height="150" src="https://storage.googleapis.com/a1aa/image/fruit-salad.jpg" width="150"/>
-                <h3 class="text-lg font-bold">Fruit Salad</h3>
-                <div class="flex items-center justify-between mt-2">
-                    <span class="text-xl font-bold text-red-500">4.6</span>
-                    <span class="text-xl font-bold text-red-500">€4.00</span>
-                    <button class="gradient-green text-white rounded-full p-2" onclick="addToCart('fruit-salad', 4.00, 'https://storage.googleapis.com/a1aa/image/fruit-salad.jpg')">
-                        <i class="fas fa-plus"></i>
-                    </button>
+            <!-- Featured Items -->
+            <div class="flex-1">
+                <h2 class="text-2xl font-bold mb-4">Featured</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2" id="items-container">
+                    <?php foreach ($products as $product): ?>
+                    <div class="bg-white p-4 rounded-lg shadow item <?php echo $product['category']; ?>">
+                        <img alt="<?php echo $product['name']; ?>" class="w-full h-32 object-cover rounded-lg mb-2" src="<?php echo $product['image_url']; ?>" />
+                        <h3 class="text-lg font-bold"><?php echo $product['name']; ?></h3>
+                        <div class="flex items-center justify-between mt-2">
+                        <span class="text-xl font-bold text-red-500">€<?php echo number_format($product['price'], 2); ?></span>
+                        <button class="gradient-green text-white rounded-full p-2" onclick="showPopup('<?php echo addslashes($product['name']); ?>', '€<?php echo number_format($product['price'], 2); ?>', '<?php echo $product['calories']; ?> kcal', '<?php echo addslashes($product['description']); ?>', '<?php echo $product['image_url']; ?>')">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </div>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Sidebar -->
-    <div class="fixed top-0 right-0 w-80 h-full bg-white shadow-lg p-4">
-        <div class="flex items-center justify-between mb-4">
-            <h2 class="text-xl font-bold">Your Cart</h2>
-            <i class="fas fa-edit text-green-500"></i>
-        </div>
-        <div class="space-y-4" id="cart-items">
-            <!-- Cart items will be dynamically added here -->
-        </div>
-        <div class="mt-4">
-            <div class="flex items-center justify-between">
-                <span>Subtotal</span>
-                <span class="text-red-500" id="subtotal">€0.00</span>
-            </div>
-            <div class="flex items-center justify-between">
-                <span>Tax</span>
-                <span class="text-red-500" id="tax">€0.00</span>
-            </div>
-            <div class="flex items-center justify-between font-bold">
-                <span>Total</span>
-                <span class="text-red-500" id="total">€0.00</span>
-            </div>
-            <button class="w-full gradient-green text-white py-2 rounded-lg mt-4">Pay</button>
-        </div>
-    </div>
-    <script>
-        const cart = {};
 
-        function addToCart(item, price, imageUrl) {
-            if (!cart[item]) {
-                cart[item] = { quantity: 0, price: price, imageUrl: imageUrl };
-            }
-            cart[item].quantity += 1;
-            updateCart();
+    <!-- Cart Menu -->
+    <div id="cart" class="fixed right-0 top-16 bg-white shadow-lg rounded-lg p-4 w-80 hidden">
+        <h2 class="text-xl font-bold mb-2">Cart</h2>
+        <div id="cart-items" class="max-h-60 overflow-y-auto mb-4"></div>
+        <div class="flex justify-between font-bold">
+            <span>Total:</span>
+            <span id="total-price">€0.00</span>
+        </div>
+        <button class="gradient-green text-white rounded-full p-2 mt-2 w-full" onclick="proceedToOrder()">Proceed to Order</button>
+    </div>
+
+    <!-- Cart Toggle Button -->
+    <button id="cart-toggle" class="fixed right-4 top-4 bg-green-500 text-white rounded-full p-2" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span id="cart-count" class="absolute top-0 right-0 bg-red-500 text-white rounded-full text-xs px-1"></span>
+    </button>
+
+    <!-- Popup Modal -->
+    <div id="popup" class="fixed inset-0 flex items-center justify-center hidden bg-black bg-opacity-50">
+        <div class="bg-white rounded-lg p-4 w-11/12 max-w-md">
+            <h2 id="popup-title" class="text-xl font-bold mb-2"></h2>
+            <img id="popup-image" class="w-full h-32 object-cover rounded-lg mb-2" />
+            <p id="popup-description" class="mb-4"></p>
+            <div class="flex justify-between">
+                <button onclick="closePopup()" class="mt-4 bg-red-500 text-white rounded-full px-4 py-2">Close</button>
+                <button id="add-to-cart-button" class="mt-4 gradient-green text-white rounded-full px-4 py-2">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function showPopup(title, price, calories, description, image) {
+            document.getElementById('popup-title').innerText = title;
+            document.getElementById('popup-description').innerText = description + ' (' + calories + ')';
+            document.getElementById('popup-image').src = image;
+            document.getElementById('add-to-cart-button').onclick = function() {
+                addToCart(title, parseFloat(price.replace('€', '')), image);
+                closePopup();
+            };
+            document.getElementById('popup').classList.remove('hidden');
         }
 
-        function updateQuantity(item, change) {
-            if (cart[item]) {
-                cart[item].quantity = Math.max(0, cart[item].quantity + change);
-                if (cart[item].quantity === 0) {
-                    delete cart[item];
+        function closePopup() {
+            document.getElementById('popup').classList.add('hidden');
+        }
+
+        function filterItems(category) {
+            const items = document.querySelectorAll('.item');
+            items.forEach(item => {
+                if (item.classList.contains(category)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
                 }
-                updateCart();
+            });
+        }
+
+        function toggleCart() {
+            const cartMenu = document.getElementById('cart');
+            cartMenu.classList.toggle('hidden');
+        }
+
+        function addToCart(name, price, image) {
+            const existingItem = cart.find(item => item.name === name);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ name, price, quantity: 1, image });
             }
+            updateCart();
         }
 
         function updateCart() {
             const cartItemsContainer = document.getElementById('cart-items');
             cartItemsContainer.innerHTML = '';
-            let subtotal = 0;
+            total = 0;
 
-            for (const item in cart) {
-                const cartItem = cart[item];
-                subtotal += cartItem.price * cartItem.quantity;
+            const cartCount = document.getElementById('cart-count');
+            cartCount.innerText = cart.reduce((sum, item) => sum + item.quantity, 0) || '';
 
-                const cartItemElement = document.createElement('div');
-                cartItemElement.className = 'flex items-center justify-between p-2 border rounded-lg';
-                cartItemElement.innerHTML = `
-                    <div class="flex items-center space-x-2">
-                        <img alt="${item}" class="w-12 h-12 rounded-full" src="${cartItem.imageUrl}" />
-                        <div>
-                            <h3 class="text-lg font-bold">${item.replace(/-/g, ' ')}</h3>
-                            <span class="text-red-500">€${cartItem.price.toFixed(2)}</span>
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'flex justify-between items-center mb-2';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-12 h-12 rounded mr-2"/>
+                    <div class="flex-1">
+                        <span>${item.name}</span>
+                        <div class="flex items-center">
+                            <button class="gradient-red text -white rounded-full p-1" onclick="changeQuantity('${item.name}', -1)">-</button>
+                            <span class="mx-2">${item.quantity}</span>
+                            <button class="gradient-green text-white rounded-full p-1" onclick="changeQuantity('${item.name}', 1)">+</button>
                         </div>
                     </div>
-                    <div class="flex items-center space-x-2">
-                        <button class="gradient-red text-white rounded-full p-2" onclick="updateQuantity('${item}', -1)"><i class="fas fa-minus"></i></button>
-                        <span>${cartItem.quantity}</span>
-                        <button class="gradient-green text-white rounded-full p-2" onclick="updateQuantity('${item}', 1)"><i class="fas fa-plus"></i></button>
-                    </div>
+                    <span>€${(item.price * item.quantity).toFixed(2)}</span>
                 `;
-                cartItemsContainer.appendChild(cartItemElement);
-            }
+                cartItemsContainer.appendChild(itemDiv);
+            });
 
-            document.getElementById('subtotal').innerText = `€${subtotal.toFixed(2)}`;
-            const tax = subtotal * 0.20; // Assuming 20% tax rate
-            document.getElementById('tax').innerText = `€${tax.toFixed(2)}`;
-            document.getElementById('total').innerText = `€${(subtotal + tax).toFixed(2)}`;
+            document.getElementById('total-price').innerText = `€${total.toFixed(2)}`;
+        }
+
+        function changeQuantity(name, change) {
+            const item = cart.find(item => item.name === name);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.name !== name);
+                }
+                updateCart();
+            }
+        }
+
+        function proceedToOrder() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            window.location.href = 'order.php'; // Redirect to order.php
         }
     </script>
 </body>

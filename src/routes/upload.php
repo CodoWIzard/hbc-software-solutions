@@ -1,5 +1,4 @@
 <?php
-//require './src/config/database.php';
 
 class Database {
     private $host = "localhost";
@@ -20,20 +19,20 @@ class Database {
     }
 }
 
-$uploadDir = realpath(__DIR__ . "/../assets/images/") . "/"; // Adjusted to point to your actual images folder
+$uploadDir = realpath(__DIR__ . "/../assets/images/") . "/";
 $fileName = basename($_FILES["image"]["name"]);
 $targetFilePath = $uploadDir . $fileName;
 
-// Ensure directory exists
+
 if (!is_dir($uploadDir)) {
     mkdir($uploadDir, 0777, true);
 }
 
-// Move the uploaded file
+
 if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFilePath)) {
     echo "File moved successfully to: " . $targetFilePath . "<br>";
 
-    // ✅ Store only the relative path
+
     $relativeFilePath = "assets/images/" . $fileName;
 
     try {

@@ -1,0 +1,19 @@
+body {
+    font-family: 'Lato', sans-serif;
+}
+.gradient-green {
+    background: linear-gradient(90deg, #38b2ac, #68d391);
+}
+.gradient-red {
+    background: linear-gradient(90deg, #f56565, #fc8181);
+}
+.hidden {
+    display: none;
+}
+.category-button {
+    border-radius: 12px;
+    transition: box-shadow 0.3s;
+}
+.category-button:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
